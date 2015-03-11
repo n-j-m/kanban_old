@@ -34,6 +34,29 @@
       </div>
     </nav>
 
+    <div id="content"></div>
+
+    <script type="text/x-handlebars-template" id="app-template">
+      <div class="flex-container">
+        {{#each cards}}
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              Some text
+            </div>
+            <div class="list-group">
+              <div class="list-group-item">Stuff</div>
+              <div class="list-group-item">Stuff</div>
+            </div>
+            <div class="panel-footer">
+              Things
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    </script>
+
+    <!-- 
+
     <div class="flex-container">
       <div class="panel panel-default">
         <div class="panel-heading">
@@ -155,7 +178,7 @@
           Things
         </div>
       </div>
-    </div>
+    </div> -->
 
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>

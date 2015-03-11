@@ -2,6 +2,8 @@
 
 import $ from "jquery";
 
+import AppView from "./views/appview";
+
 function resize() {
   let board = $(".flex-container");
   const headerHeight = $(".navbar").outerHeight();
@@ -10,4 +12,5 @@ function resize() {
 $(() => {
   $(window).resize(resize);
   resize();
+  new AppView({el: $("#content")});
 });
