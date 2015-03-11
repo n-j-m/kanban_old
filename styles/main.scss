@@ -1,0 +1,30 @@
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+body {
+  padding-top: 60px;
+  background-color: #CCC;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+}
+
+.flex-container > div {
+  width: 200px;
+  min-width: 200px;
+  min-height: 100px;
+  margin-top: 10px;
+  margin-right: 10px;
+  background-color: transparent;
+  border: 0;
+}
+
+.flex-container >  div:first-child {
+  margin-left: 10px;
+}
