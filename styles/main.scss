@@ -11,7 +11,7 @@ body {
   display: flex;
   flex-direction: row;
   height: 100%;
-  width: 100%;
+  width: 110%;
   overflow: auto;
 }
 
@@ -27,4 +27,28 @@ body {
 
 .flex-container >  div:first-child {
   margin-left: 10px;
+}
+
+div.panel.add-card {
+  .panel-heading {
+    border: 1px solid #333;
+    border-radius: 4px;
+    background-color: #bbb;
+    cursor: pointer;
+  }
+
+  .pull-right {
+    padding-top: 3px;
+  }
+}
+
+div.panel-heading.active {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 12px;
+  padding-right: 12px;
+
+  input[type=text] {
+    padding-left: 2px;
+  }
 }

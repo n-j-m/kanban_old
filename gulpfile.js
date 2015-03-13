@@ -19,7 +19,7 @@ var gulp = require("gulp"),
     merge = require("merge-stream"),
     reload = browserSync.reload,
     p = {
-      entry: "./scripts/app.js",
+      entry: "./scripts/app.jsx",
       scss: "styles/main.scss",
       scssDir: "styles",
       vendor: {
@@ -64,7 +64,12 @@ gulp.task("browserSync", function() {
 });
 
 gulp.task("watchify", function() {
-  var bundler = watchify(browserify(p.entry, watchify.args));
+  var bundler = watchify(browserify(p.entry, {
+    cache: {},
+    packageCache: {},
+    fullPaths: true,
+    extensions: [".jsx"]
+  }));
 
   function rebundle() {
     return bundler.
@@ -81,7 +86,9 @@ gulp.task("watchify", function() {
 });
 
 gulp.task("browserify", function() {
-  return browserify(p.entry).
+  return browserify(p.entry, {
+    extensions: [".jsx"]
+  }).
     transform(babelify).
     bundle().
     pipe(source(p.bundle)).
