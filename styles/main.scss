@@ -4,51 +4,132 @@
 
 body {
   padding-top: 60px;
-  background-color: #CCC;
+  background-color: #256F2A;
+}
+
+.navbar {
+  background-color: #274517;
 }
 
 .flex-container {
   display: flex;
   flex-direction: row;
-  height: 100%;
   width: 110%;
-  overflow: auto;
+  overflow-x: auto;
+  overflow-y: hidden;
+  align-items: flex-start;
+  position: absolute;
 }
 
-.flex-container > div {
-  width: 200px;
-  min-width: 200px;
-  min-height: 100px;
-  margin-top: 10px;
-  margin-right: 10px;
-  background-color: transparent;
-  border: 0;
-}
-
-.flex-container >  div:first-child {
+.flex-container > div:first-child {
   margin-left: 10px;
 }
 
-div.panel.add-card {
-  .panel-heading {
-    border: 1px solid #333;
-    border-radius: 4px;
-    background-color: #bbb;
+.flex-container {
+  .panel {
+    background-color: #e2e4e6;
+    width: 260px;
+    min-width: 260px;
+    margin: 0 5px;
+    border: 0;
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 240px;
+    max-height: 100%;
+    padding: 4px 3px 3px;
+
+    .panel-heading {
+      padding: 10px 0px 10px 13px;
+
+      .card-settings {
+        position: relative;
+        padding-top: 3px;
+        padding-bottom: 3px;
+        padding-left: 8px;
+        padding-right: 10px;
+        cursor: pointer;
+      }
+
+    }
+
+    .items {
+      padding: 5px 0;
+
+      .item {
+        padding: 7px 10px;
+        cursor: pointer;
+      }
+    }
+
+    .panel-footer {
+      padding: 10px 0px 10px 13px;
+    }
+  }
+
+  .list-group-item {
+    background-color: transparent;
+    padding: 0 5px;
+  }
+
+  .item-controls {
+    padding: 0;
+  }
+
+  /* Add Card Styles */
+  .panel.add-card {
+    margin: 0 5px;
+    min-height: 32px;
+    transition: background 85ms ease-in,opacity 40ms ease-in,border-color 85ms ease-in;
+
+    .list-group-item {
+      padding: 0;
+    }
+
+    .placeholder {
+      cursor: pointer;
+      display: block;
+      margin: 0;
+      padding: 7px 14px 10px 13px;
+      transition: color 85ms ease-in;
+    }
+  }
+
+  input.form-control {
+    margin: 0;
+    display: block;
+    width: 100%;
+    background: rgba(0,0,0,.05);
+    box-shadow: inset 0 1px 8px rgba(0,0,0,.15);
+    transition: margin 2000ms ease-in,background 2000ms ease-in;
+    min-height: 34px;
+  }
+
+  .clickable {
     cursor: pointer;
   }
 
-  .pull-right {
-    padding-top: 3px;
+  .entry {
+    padding: 6px 9px;
   }
-}
 
-div.panel-heading.active {
-  padding-top: 3px;
-  padding-bottom: 3px;
-  padding-left: 12px;
-  padding-right: 12px;
+  .edit-controls {
+    height: 32px;
+    margin: 4px 0;
+    transition: margin 85ms ease-in,height 85ms ease-in;
 
-  input[type=text] {
-    padding-left: 2px;
+    .btn {
+      background-color: #79CC66;
+      float: left;
+      margin-top: 0;
+      min-height: 30px;
+      height: 30px;
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
+
+    .fa-close {
+      cursor: pointer;
+      margin-left: 10px;
+    }
   }
 }

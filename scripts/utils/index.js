@@ -8,7 +8,6 @@ const TheUtils = {
     on_resize(function() {
       var navBarHeight = 50;
       var newHeight = window.innerHeight - navBarHeight - 10;
-      console.log("h:", newHeight);
       el.clientHeight = newHeight;
     })();
   }

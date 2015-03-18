@@ -1,21 +1,28 @@
 "use strict";
 
-import alt from "../alt";
+import Reflux from "reflux";
 
 import CardActions from "../actions/card_actions";
 
-class CardStore {
+const CardStore = Reflux.createStore({
 
-  constructor() {
-    this.bindActions(CardActions);
+  listenables: CardActions,
 
-    this.cards = [];
+  onGetCardsCompleted(cards) {
+    this.trigger({cards});
   },
 
-  onCreate(title) {
-    this.cards.
+  onGetCardCompleted(card) {
+    this.trigger({card});
+  },
+
+  onCreateCardCompleted(cards) {
+    this.trigger({cards});
+  },
+
+  onCreateCardItemCompleted(cards) {
+    this.trigger({cards});
   }
+});
 
-}
-
-export default alt.createStore(CardStore);
+export default CardStore;

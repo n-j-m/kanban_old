@@ -3,7 +3,7 @@
 import React from "react";
 
 import CardItem from "./card_item";
-import AddCardItem from "./add_card_item";
+import CardAddItem from "./card_add_item";
 
 const Card = React.createClass({
 
@@ -19,24 +19,27 @@ const Card = React.createClass({
 
   render() {
     const card = this.props.card;
-    const cardItems = cards.items.map((item, i) => {
-      return <CardItem key={i} item={item} />
+    const cardItems = card.items.map((item, i) => {
+      return <CardItem key={i} item={item} />;
     });
 
     return (
       <div className="panel panel-default">
         <div className="panel-heading">
-          {card.heading}
+          {card.title}
+          <i className="fa fa-ellipsis-v pull-right card-settings"></i>
         </div>
-        <div className="list-group">
+        <div className="list-group items">
           {cardItems}
-          <AddCardItem />
+          <CardAddItem cardId={card.id} />
         </div>
         <div className="panel-footer">
-          Things
+          <span>Tester</span>
         </div>
       </div>
     );
   }
 
-})
+});
+
+export default Card;

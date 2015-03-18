@@ -2,6 +2,9 @@
 
 import React from "react";
 
+import AddCardPlaceholder from "./add_card_placeholder";
+import AddCardControls from "./add_card_controls";
+
 const AddCard = React.createClass({
 
   getInitialState() {
@@ -10,55 +13,25 @@ const AddCard = React.createClass({
     };
   },
 
-  componentDidUpdate() {
-    if (this.state.active) {
-      // focus the input if it's visible
-      this.refs.cardInput.getDOMNode().focus();
-    }
-  },
-
   render() {
-    const active = this.state.active;
-
-    let cls = "panel-heading" + (active ? " active" : "");
-
-    let ctrl = active ? (
-          <input
-            ref="cardInput"
-            onBlur={this.handleBlur}
-            onKeyPress={this.handleKeyPress}
-            className="form-control"
-            type="text"
-            placeholder="Add Card" />
-        ) :
-      (<div>Add Card <span className="fa fa-plus pull-right"></span></div>);
-
+    let ctrl = this.state.active ?
+      <AddCardControls onCloseClick={this.handleClose} /> :
+      <AddCardPlaceholder onClick={this.handlePlaceholderClick} />
     return (
       <div className="panel add-card">
-        <div className={cls} onClick={this.handleClick}>
+        <div className="list-group">
           {ctrl}
         </div>
       </div>
     );
   },
 
-  handleClick(evt) {
-    evt.preventDefault();
-
+  handlePlaceholderClick(evt) {
     this.setState({active: true});
   },
 
-  handleBlur(evt) {
-    evt.preventDefault();
-
+  handleClose(evt) {
     this.setState({active: false});
-  },
-
-  handleKeyPress(evt) {
-    if (evt.key === "Enter") {
-      console.log("new card");
-      this.setState({active: false});
-    }
   }
 
 });

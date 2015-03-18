@@ -17,7 +17,12 @@ var gulp = require("gulp"),
     sourcemaps = require("gulp-sourcemaps"),
     runSeq = require("run-sequence"),
     merge = require("merge-stream"),
+    _merge = require("lodash/object/merge"),
     reload = browserSync.reload,
+    browserifyOptions = {
+      extensions: [".jsx"]
+    },
+    watchifyOptions = _merge(browserifyOptions, watchify.args),
     p = {
       entry: "./scripts/app.jsx",
       scss: "styles/main.scss",
@@ -64,12 +69,7 @@ gulp.task("browserSync", function() {
 });
 
 gulp.task("watchify", function() {
-  var bundler = watchify(browserify(p.entry, {
-    cache: {},
-    packageCache: {},
-    fullPaths: true,
-    extensions: [".jsx"]
-  }));
+  var bundler = watchify(browserify(p.entry, watchifyOptions));
 
   function rebundle() {
     return bundler.
@@ -81,14 +81,16 @@ gulp.task("watchify", function() {
   }
 
   bundler.transform(babelify).
+    exclude("jquery").
+    exclude("underscore").
     on("update", rebundle);
   return rebundle();
 });
 
 gulp.task("browserify", function() {
-  return browserify(p.entry, {
-    extensions: [".jsx"]
-  }).
+  return browserify(p.entry, browserifyOptions).
+    exclude("jquery").
+    exclude("underscore").
     transform(babelify).
     bundle().
     pipe(source(p.bundle)).
