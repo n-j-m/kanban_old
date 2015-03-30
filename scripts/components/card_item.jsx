@@ -10,11 +10,11 @@ const CardItem = React.createClass({
 
   render() {
     let item = this.props.item;
-    let statusClass = item.get("completed") ? "fa-check" : "fa-square-o";
+    let statusClass = item.completed ? "fa-check" : "fa-square-o";
     return (
       <div className="list-group-item item">
-        {item.get("title")}
-        <i className={("fa " + statusClass + " status")}></i>
+        {item.title}
+        <i className={("fa " + statusClass + " status pull-right")}></i>
       </div>
     );
   }

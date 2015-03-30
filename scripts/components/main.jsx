@@ -11,7 +11,13 @@ import AddCard from "./add_card";
 import Card from "./card";
 
 const Main = React.createClass({
-  mixins: [Reflux.connect(CardStore)],
+  mixins: [Reflux.listenTo(CardStore, "onCardStoreChange")],
+
+  onCardStoreChange(cards) {
+    this.setState({
+      cards: cards || []
+    });
+  },
 
   getInitialState() {
     return {
@@ -29,7 +35,7 @@ const Main = React.createClass({
 
   render() {
     const cards = this.state.cards.map((card) => {
-      return <Card key={card.id} card={card} />;
+      return <Card key={card._id} card={card} />;
     });
 
     const style = {

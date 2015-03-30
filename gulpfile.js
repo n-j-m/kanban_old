@@ -17,6 +17,7 @@ var gulp = require("gulp"),
     sourcemaps = require("gulp-sourcemaps"),
     runSeq = require("run-sequence"),
     merge = require("merge-stream"),
+    nodemon = require("gulp-nodemon"),
     _merge = require("lodash/object/merge"),
     reload = browserSync.reload,
     browserifyOptions = {
@@ -60,11 +61,23 @@ gulp.task("clean", function(cb) {
   del(["dist/*", "!dist/index.html"], cb);
 });
 
-gulp.task("browserSync", function() {
-  browserSync({
-    server: {
-      baseDir: "./dist"
+gulp.task("server", function(done) {
+  var called = false;
+  return nodemon({
+    script: "./server/bin/www",
+    env: { PORT: "5000"}
+  }).
+  on("start", function() {
+    if (!called) {
+      done();
+      called = true;
     }
+  });
+});
+
+gulp.task("browser-sync", ["server"], function() {
+  browserSync({
+    proxy: "http://localhost:5000"
   });
 });
 
@@ -138,7 +151,7 @@ gulp.task("watchTask", function() {
 });
 
 gulp.task("watch", function(done) {
-  runSeq("clean", "browserify", "styles", "vendor", ["watchify", "browserSync", "watchTask"], done);
+  runSeq("clean", "browserify", "styles", "vendor", "browser-sync", ["watchify", "watchTask"], done);
 });
 
 gulp.task("build", function(done) {

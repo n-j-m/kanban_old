@@ -31,7 +31,7 @@ const Card = React.createClass({
         </div>
         <div className="list-group items">
           {cardItems}
-          <CardAddItem cardId={card.id} />
+          <CardAddItem cardId={card._id} />
         </div>
         <div className="panel-footer">
           <span>Tester</span>

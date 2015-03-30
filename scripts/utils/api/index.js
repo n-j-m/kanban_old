@@ -1,5 +1,5 @@
 "use strict";
 
-import TheApi from "./LS-api";
+import TheApi from "./web-api";
 
 export default TheApi;
