@@ -10,7 +10,7 @@ const CardController = {
   getCards(req, res) {
     Card.find({}).
       populate("items").
-      exec(utils.respond(res, []));
+      exec(utils.respond(res, []))
   },
 
   getCard(req, res) {

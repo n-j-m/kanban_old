@@ -18,6 +18,7 @@ var gulp = require("gulp"),
     runSeq = require("run-sequence"),
     merge = require("merge-stream"),
     nodemon = require("gulp-nodemon"),
+    server = require("gulp-develop-server"),
     _merge = require("lodash/object/merge"),
     reload = browserSync.reload,
     browserifyOptions = {
@@ -57,27 +58,39 @@ var gulp = require("gulp"),
       distFonts: "dist/fonts"
     };
 
+var options = {
+  server: {
+    path: "./server/bin/www"
+  },
+  bs: {
+    proxy: "localhost:5000"
+  }
+};
+
+var serverFiles = [
+  "./server/bin/www",
+  "./server/**/*.js"
+];
+
 gulp.task("clean", function(cb) {
   del(["dist/*", "!dist/index.html"], cb);
 });
 
-gulp.task("server", function(done) {
-  var called = false;
-  return nodemon({
-    script: "./server/bin/www",
-    env: { PORT: "5000"}
-  }).
-  on("start", function() {
-    if (!called) {
-      done();
-      called = true;
+gulp.task("server:start", function(done) {
+  server.listen(options.server, function(err) {
+    if (!err) {
+      browserSync(options.bs);
     }
+    done()
   });
 });
 
-gulp.task("browser-sync", ["server"], function() {
-  browserSync({
-    proxy: "http://localhost:5000"
+gulp.task("server:restart", function(done) {
+  server.restart(function(err) {
+    if (!err) {
+      browserSync.reload();
+    }
+    done();
   });
 });
 
@@ -148,10 +161,11 @@ gulp.task("watchTask", function() {
   gulp.watch(p.scss, ["styles"]);
   gulp.watch("./dist/index.html").
     on("change", function() { browserSync.reload(); });
+  gulp.watch(serverFiles, ["server:restart"]);
 });
 
 gulp.task("watch", function(done) {
-  runSeq("clean", "browserify", "styles", "vendor", "browser-sync", ["watchify", "watchTask"], done);
+  runSeq("clean", "browserify", "styles", "vendor", "server:start", ["watchify", "watchTask"], done);
 });
 
 gulp.task("build", function(done) {
