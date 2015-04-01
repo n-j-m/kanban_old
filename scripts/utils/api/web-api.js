@@ -56,12 +56,12 @@ const TheAPI = {
     return post("/cards", {title})
   },
 
-  createCardItem(cardId, item) {
-    return post(`/cards/${cardId}/items`, item)
+  createCardItem(cardId, itemModel) {
+    return post(`/cards/${cardId}/items`, itemModel)
   },
 
-  updateItem(itemId, item) {
-    return put(`/items/${itemId}`, item)
+  updateItem(itemId, itemModel) {
+    return put(`/items/${itemId}`, itemModel)
   }
 
 }

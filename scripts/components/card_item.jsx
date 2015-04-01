@@ -2,6 +2,8 @@
 
 import React from "react";
 
+import CardActions from "../actions/card_actions";
+
 const CardItem = React.createClass({
 
   propTypes: {
@@ -14,9 +16,15 @@ const CardItem = React.createClass({
     return (
       <div className="list-group-item item">
         {item.title}
-        <i className={("fa " + statusClass + " status pull-right")}></i>
+        <i onClick={this.handleOnClick} className={("fa " + statusClass + " status pull-right")}></i>
       </div>
     );
+  },
+
+  handleOnClick(evt) {
+    evt.preventDefault();
+
+    CardActions.updateItem(this.props.item._id, {completed: !this.props.item.completed});
   }
 
 });

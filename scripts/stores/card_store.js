@@ -32,6 +32,19 @@ const CardStore = Reflux.createStore({
     }));
   },
 
+  onUpdateItemCompleted(item) {
+    let card = this.cards.filter((c) => {
+      return c._id === item.card._id;
+    })[0];
+    if (card) {
+      card.items = card.items.map((i) => {
+        return i._id === item._id ? item : i;
+      });
+
+      this.updateCards(this.cards);
+    }
+  },
+
   updateCards(newCards) {
     this.cards = newCards;
     this.trigger(this.cards);

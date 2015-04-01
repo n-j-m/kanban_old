@@ -32,12 +32,6 @@ const CardController = {
       exec(utils.respond(res, null));
   },
 
-  getCardItems(req, res) {
-    let cardId = req.params.cardId;
-
-    Item.find({cardId}, utils.respond(res, []));
-  },
-
   createCardItem(req, res) {
     let cardId = req.params.cardId;
     Card.findOne({ _id: cardId }, utils.respondOverride(res, (card) => {
@@ -52,9 +46,11 @@ const CardController = {
   },
 
   updateItem(req, res) {
-    let itemId = req.params.itemId;
+    let itemId = req.params.id;
 
-    Item.findOneAndUpdate({ _id: itemId }, req.body, utils.respond(res, null));
+    Item.findOneAndUpdate({ _id: itemId }, req.body, utils.respondOverride(res, (item) => {
+      item.populate("card", utils.respond(res, null));
+    }));
   }
 
 };

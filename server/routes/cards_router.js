@@ -21,7 +21,6 @@ cardRoute.
 let itemsRoute = router.route("/cards/:cardId/items");
 
 itemsRoute.
-  get(CardController.getCardItems).
   post(CardController.createCardItem);
 
 let itemRoute = router.route("/items/:id");
