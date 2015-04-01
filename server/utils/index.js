@@ -9,10 +9,10 @@ const utils = {
     }
   },
 
-  respondOverride(res, data) {
-    return (err) => {
+  respondOverride(res, dataResponder) {
+    return (err, data) => {
       if (err) res.status(500).send(err);
-      else res.json(data);
+      else dataResponder(data);
     }
   }
 

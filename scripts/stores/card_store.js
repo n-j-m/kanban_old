@@ -3,7 +3,7 @@
 import Reflux from "reflux";
 
 import CardActions from "../actions/card_actions";
-import _find from "lodash/collection/find";
+import _map from "lodash/collection/map";
 
 const CardStore = Reflux.createStore({
 
@@ -22,18 +22,14 @@ const CardStore = Reflux.createStore({
     this.updateCards([card].concat(this.cards));
   },
 
-  onCreateCardCompleted(cards) {
-    this.updateCards(cards);
+  onCreateCardCompleted(card) {
+    this.updateCards([card].concat(this.cards));
   },
 
-  onCreateCardItemCompleted(item) {
-    let card = _find(this.cards, (c) => {
-      return c._id === item.cardId;
-    });
-    if (card) {
-      card.items.push(item);
-    }
-    this.trigger(this.cards);
+  onCreateCardItemCompleted(card) {
+    this.updateCards(this.cards.map((c) => {
+      return c._id === card._id ? card : c;
+    }));
   },
 
   updateCards(newCards) {

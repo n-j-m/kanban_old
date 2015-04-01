@@ -20,7 +20,6 @@ const CardController = {
   },
 
   createCard(req, res) {
-    console.log("createCard:", req.originalUrl);
     let card = new Card(req.body);
     card.save(utils.respond(res, card));
   },
@@ -41,14 +40,11 @@ const CardController = {
 
   createCardItem(req, res) {
     let cardId = req.params.cardId;
-    Card.findOne({ _id: cardId }, (err, card) => {
-      if (err) return res.status(500).send(err);
-
+    Card.findOne({ _id: cardId }, utils.respondOverride(res, (card) => {
       let item = new Item(req.body);
       card.items.push(item);
-
-      card.save(utils.respondOverride(res, item));
-    });
+      card.save(utils.respond(res, null));
+    }));
   },
 
   getItem(req, res) {

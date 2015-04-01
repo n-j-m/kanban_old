@@ -21,13 +21,19 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "..", "dist")));
 
-var mongoose = require("mongoose");
+var TheDBUtils = require("./config/database");
 
-mongoose.connect("mongodb://localhost/kanban");
+TheDBUtils.initialize(app.get("env"));
 
 app.use('/', routes);
 
 app.use("/api", require("./routes/api_router"));
+
+// development REST utils
+if (app.get("env") === "development") {
+  app.enable("trust proxy");
+  app.use("/wipa_da_data", TheDBUtils.wipa_da_data);
+}
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
