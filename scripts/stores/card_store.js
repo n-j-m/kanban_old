@@ -3,7 +3,6 @@
 import Reflux from "reflux";
 
 import CardActions from "../actions/card_actions";
-import _map from "lodash/collection/map";
 
 const CardStore = Reflux.createStore({
 
@@ -34,9 +33,10 @@ const CardStore = Reflux.createStore({
 
   onUpdateItemCompleted(item) {
     let card = this.cards.filter((c) => {
-      return c._id === item.card._id;
+      return c._id === item.cardId;
     })[0];
     if (card) {
+      console.log("card:", card);
       card.items = card.items.map((i) => {
         return i._id === item._id ? item : i;
       });

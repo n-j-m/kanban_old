@@ -4,8 +4,8 @@ import mongoose from "mongoose";
 
 let ItemSchema = mongoose.Schema({
   title: String,
-  completed: Boolean,
-  card: {type: mongoose.Schema.Types.ObjectId, ref: "Card"}
+  completed: {type: Boolean, default: false},
+  cardId: mongoose.Schema.Types.ObjectId
 });
 
 export default mongoose.model("Item", ItemSchema);

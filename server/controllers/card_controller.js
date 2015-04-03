@@ -35,9 +35,11 @@ const CardController = {
   createCardItem(req, res) {
     let cardId = req.params.cardId;
     Card.findOne({ _id: cardId }, utils.respondOverride(res, (card) => {
-      let item = new Item(req.body);
-      card.items.push(item);
-      card.save(utils.respond(res, null));
+      let item = new Item(_merge({cardId}, req.body));
+      item.save(utils.respondOverride(res, (item) => {
+        card.items.push(item);
+        card.save(utils.respond(res, null));
+      }));
     }));
   },
 
@@ -47,10 +49,9 @@ const CardController = {
 
   updateItem(req, res) {
     let itemId = req.params.id;
-
-    Item.findOneAndUpdate({ _id: itemId }, req.body, utils.respondOverride(res, (item) => {
-      item.populate("card", utils.respond(res, null));
-    }));
+    Item.findOne({ _id: itemId }, function(err, item) {
+      Item.update({ _id: itemId }, req.body, utils.respond(res, item));
+    });
   }
 
 };
